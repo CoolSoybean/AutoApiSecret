@@ -58,6 +58,7 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
         branch: main
     - name: Re-pull on failure
       if: ${{ failure() }}
