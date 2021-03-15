@@ -54,12 +54,21 @@ jobs:
         git pull origin ${{ github.ref }} --autostash --rebase
         git add .
         git commit -m "update new refresh_token" -a
+    - name: Sleep for 10 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         force: true
         branch: main
+    - name: Sleep for 10 seconds
+      if: ${{ failure() }}
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
     - name: Re-pull on failure
       if: ${{ failure() }}
       run: git pull origin ${{ github.ref }} --autostash --rebase
